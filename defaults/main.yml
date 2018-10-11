@@ -8,3 +8,6 @@ solr_with_systemd: True
 configset_list:
   - default
 auto_populate_configset_list: True
+
+solr_base_path: /var/solr
+solr_home: "{{ solr_base_path }}/data"

@@ -38,7 +38,7 @@ Requirements
     default: `{{ dest_main_path }}/solr-{{ solr_version }}`
     default: `{{ dest_main_path }}\\solr-{{ solr_version }}`
   - `overrride_solr_configset_path` - solr configset folder path
-    default: `{{ dest_solr_path }}/server/solr/configsets`
+    default: `{{ solr_home }}/configsets`
     default: `{{ dest_solr_path }}\\server\\solr\\configsets`
   - `solr_service_name` - solr service name
     default: `solr`
@@ -48,6 +48,10 @@ Requirements
     default: `- default`
   - `auto_populate_configset_list` - get all configset directories automatically
     default: `True`
+  - `solr_base_path` - path to solr base
+    default: `/var/solr`
+  - `solr_home` - path to SOLR_HOME
+    default: `{{ solr_base_path }}/data`
 
 Example Inventory
 ----------------
