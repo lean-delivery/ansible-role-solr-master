@@ -14,4 +14,4 @@
     - role: lean_delivery.solr_standalone
     - role: ansible-role-solr-master
   vars:
-    change_default_password: False
+    solr_change_default_password: False
