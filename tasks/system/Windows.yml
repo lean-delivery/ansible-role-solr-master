@@ -4,7 +4,7 @@
 # here is a workarround
 - name: Set path with separator
   set_fact:
-    configset_list: '{{ configset_list | map("regex_replace", '(.*)', "\\\\\\1") | list }}'
+    configset_list: '{{ configset_list | map("regex_replace", "(.*)", "\\\\\\1") | list }}'
   when: not auto_populate_configset_list
 
 - name: Set configset list
