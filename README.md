@@ -2,7 +2,8 @@ Solr Configuration as Master
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-solr-master/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-solr-master.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-solr-master)
-[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.solr__master-blue.svg)](https://galaxy.ansible.com/lean_delivery/solr_master)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-solr-master/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-solr-master)
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.solr-master-blue.svg)](https://galaxy.ansible.com/lean_delivery/solr-master)
 ![Ansible](https://img.shields.io/ansible/role/d/30406.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F30406%2F&query=$.min_ansible_version)
 ## Summary
@@ -34,15 +35,15 @@ Requirements
 ## Role Variables
   - `solr_version` - matches available version on https://archive.apache.org/dist/lucene/solr/. Tested versions 5.3-7.1.x
     default: `7.1.0`
-  - `override_dest_main_path` - root directory to store solr folder
+  - `solr_dest_main_path` - root directory to store solr folder
     default: `/opt`
     default: `C:\Solr`
-  - `override_dest_solr_path` - solr folder path
+  - `solr_dest_path` - solr folder path
     default: `{{ dest_main_path }}/solr-{{ solr_version }}`
-    default: `{{ dest_main_path }}\\solr-{{ solr_version }}`
-  - `overrride_solr_configset_path` - solr configset folder path
+    default: `{{ dest_main_path }}\solr-{{ solr_version }}`
+  - `solr_configset_path` - solr configset folder path
     default: `{{ solr_home }}/configsets`
-    default: `{{ dest_solr_path }}\\server\\solr\\configsets`
+    default: `{{ solr_dest_path }}\server\solr\configsets`
   - `solr_service_name` - solr service name
     default: `solr`
   - `solr_with_systemd` - to run solr as a service

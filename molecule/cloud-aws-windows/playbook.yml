@@ -1,12 +1,4 @@
 ---
-- name: Windows instances waiting.
-  gather_facts: True
-  hosts: windows
-  tasks:
-    - name: Wait for system to become reachable
-      wait_for_connection:
-        delay: 240
-
 - name: Solr-standalone
   hosts: all
   roles:

@@ -2,7 +2,7 @@
 ## solr config directory
 solr_version: 7.1.0
 
-solr_service_name: "solr"
+solr_service_name: solr
 solr_with_systemd: True
 
 configset_list:
@@ -10,4 +10,8 @@ configset_list:
 auto_populate_configset_list: True
 
 solr_base_path: /var/solr
-solr_home: "{{ solr_base_path }}/data"
+solr_home: '{{ solr_base_path }}/data'
+
+solr_dest_main_path: '{{ default_dest_main_path }}'
+solr_dest_path: '{{ default_solr_dest_path }}'
+solr_configset_path: '{{ default_solr_configset_path }}'

@@ -1,32 +1,32 @@
 ---
-- name: "Set configset list"
+- name: Set configset list
   find:
-    paths: "{{ solr_configset_path }}"
+    paths: '{{ solr_configset_path }}'
     file_type: directory
   register: configset_output
   become: True
   when: auto_populate_configset_list
 
-- name: "Populate configset list"
+- name: Populate configset list
   set_fact:
-    configset_list: "{{ configset_output.files | map(attribute='path') | list | \
-      map('replace', solr_configset_path + '/', '') | list }}"
+    configset_list: '{{ configset_output.files | map(attribute="path") | list | \
+      map("replace", solr_configset_path + "/", "") | list }}'
   when: auto_populate_configset_list
 
-- name: "Get config files list contained replication handler"
+- name: Get config files list contained replication handler
   find:
-    paths: "{{ configset_list | \
-      map('regex_replace', '(.*)', solr_configset_path + '/\\1/conf') | list }}"
-    patterns: "solrconfig.xml"
-    contains: "(.*)requestHandler(.*)replication(.*)solr.ReplicationHandler(.*)"
+    paths: '{{ configset_list | \
+      map("regex_replace", "(.*)", solr_configset_path + "/\\1/conf") | list }}'
+    patterns: 'solrconfig.xml'
+    contains: '(.*)requestHandler(.*)replication(.*)solr.ReplicationHandler(.*)'
   register: true_configset_xml_list
   become: True
 
-- name: "Configure solr node as master"
+- name: Configure solr node as master
   blockinfile:
-    dest: "{{ item.path }}"
+    dest: '{{ item.path }}'
     insertafter: '<requestHandler name="/replication" class="solr.ReplicationHandler" >'
-    marker: " <!-- {mark} solr ansible custom block --> "
+    marker: ' <!-- {mark} solr ansible custom block --> '
     block: |
       <lst name="master">
       <str name="replicateAfter">commit</str>
@@ -35,9 +35,9 @@
       </lst>
     state: present
   become: True
-  loop: "{{ true_configset_xml_list.files }}"
+  loop: '{{ true_configset_xml_list.files }}'
   notify:
-    - "restart solr linux"
+    - restart solr linux
 
-- name: "Force all notified handlers"
+- name: Force all notified handlers
   meta: flush_handlers
