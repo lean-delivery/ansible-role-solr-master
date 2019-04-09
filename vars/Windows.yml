@@ -1,4 +1,4 @@
 ---
 default_solr_dest_main_path: 'C:\Solr'
 default_solr_dest_path: '{{ solr_dest_main_path }}\solr-{{ solr_version }}'
-default_solr_configset_path: '{{ solr_dest_main_path }}\server\solr\configsets'
+default_solr_configset_path: '{{ solr_dest_path }}\server\solr\configsets'
