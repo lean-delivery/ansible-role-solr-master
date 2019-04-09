@@ -16,7 +16,7 @@
 
 - name: Populate configset list
   set_fact:
-    configset_list: "{{ configset_output.files | map(attribute=path) | \
+    configset_list: "{{ configset_output.files | map(attribute='path') | \
       list | map('replace', solr_configset_path, '') | list }}"
   when: auto_populate_configset_list
 
