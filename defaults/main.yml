@@ -12,6 +12,6 @@ auto_populate_configset_list: True
 solr_base_path: /var/solr
 solr_home: '{{ solr_base_path }}/data'
 
-solr_dest_main_path: '{{ default_dest_main_path }}'
+solr_dest_main_path: '{{ default_solr_dest_main_path }}'
 solr_dest_path: '{{ default_solr_dest_path }}'
 solr_configset_path: '{{ default_solr_configset_path }}'
