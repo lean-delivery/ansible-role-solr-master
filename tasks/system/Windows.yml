@@ -4,7 +4,7 @@
 # here is a workarround
 - name: Set path with separator
   set_fact:
-    configset_list: "{{ configset_list | map('regex_replace', '(.*)', '\\\\\\1') | list }}"
+    configset_list: '{{ configset_list | map("regex_replace", "(.*)", "\\\1") | list }}'
   when: not auto_populate_configset_list
 
 - name: Set configset list
@@ -30,21 +30,22 @@
   register: true_configset_xml_list
   loop: '{{ configset_list }}'
   failed_when: False
+  changed_when: False
 
 - name: Configure solr node as master
   win_lineinfile:
     path: '{{ solr_configset_path }}{{ item.item }}\conf\solrconfig.xml'
-    insertafter: '<requestHandler name="/replication" class="solr.ReplicationHandler" >'
+    insertafter: '.*<requestHandler name="/replication" class="solr.ReplicationHandler".*>'
     line:
-      "<!-- BEGIN solr ansible custom block --> <lst name=\"master\">
-      <str name=\"replicateAfter\">commit</str>
-      <str name=\"replicateAfter\">startup</str>
-      <str name=\"confFiles\">schema.xml,stopwords.txt</str> </lst>
-      <!-- END solr ansible custom block -->"
+      '<!-- BEGIN solr ansible custom block --> <lst name="master">
+      <str name="replicateAfter">commit</str>
+      <str name="replicateAfter">startup</str>
+      <str name="confFiles">schema.xml,stopwords.txt</str> </lst>
+      <!-- END solr ansible custom block -->'
     regexp:
-      '<!--\\sBEGIN\\ssolr\\sansible\\scustom\\sblock(.*)
-      END\\ssolr\\sansible\\scustom\\sblock\\s-->'
-  when: item.stdout_lines|length > 0
+      '<!--\sBEGIN\ssolr\sansible\scustom\sblock(.*)
+      END\ssolr\sansible\scustom\sblock\s-->'
+  when: item.stdout_lines | length
   loop: '{{ true_configset_xml_list.results }}'
   notify:
     - restart solr windows
