@@ -9,14 +9,16 @@
 
 - name: Populate configset list
   set_fact:
-    configset_list: "{{ configset_output.files | map(attribute='path') | list | \
-      map('replace', solr_configset_path + '/', '') | list }}"
+    configset_list: >-
+      {{ configset_output.files | map(attribute='path') | list
+      | map('replace', solr_configset_path + '/', '') | list }}
   when: auto_populate_configset_list
 
 - name: Get config files list contained replication handler
   find:
-    paths: "{{ configset_list | \
-      map('regex_replace', '(.*)', solr_configset_path + '/\\1/conf') | list }}"
+    paths: >-
+      {{ configset_list
+      | map('regex_replace', '(.*)', solr_configset_path + '/\\1/conf') | list }}
     patterns: 'solrconfig.xml'
     contains: '(.*)requestHandler(.*)replication(.*)solr.ReplicationHandler(.*)'
   register: true_configset_xml_list
