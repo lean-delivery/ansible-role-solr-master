@@ -22,10 +22,6 @@
   loop: '{{ configset_list }}'
   become: True
 
-- name: Debug true_configset_xml_list
-  debug:
-    var: true_configset_xml_list
-
 - name: Configure solr node as master
   blockinfile:
     dest: '{{ solr_configset_path }}/{{ item.item | basename }}/conf/solrconfig.xml'
