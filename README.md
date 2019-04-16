@@ -2,7 +2,8 @@ Solr Configuration as Master
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-solr-master/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-solr-master.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-solr-master)
-[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.solr__master-blue.svg)](https://galaxy.ansible.com/lean_delivery/solr_master)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-solr-master/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-solr-master/pipelines)
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.solr-master-blue.svg)](https://galaxy.ansible.com/lean_delivery/solr-master)
 ![Ansible](https://img.shields.io/ansible/role/d/30406.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F30406%2F&query=$.min_ansible_version)
 ## Summary
@@ -12,7 +13,7 @@ This role:
 
 Requirements
 ------------
-  - Minimal Version of the ansible for installation: 2.5
+  - Minimal Version of the ansible for installation: 2.7
   - **Java 8** [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-java.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-java)
   - **Solr installed** [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-solr-standalone.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-solr-standalone)
   - **Supported OS**:
@@ -32,29 +33,49 @@ Requirements
 [Prepared Windows System](https://docs.ansible.com/ansible/latest/user_guide/windows_setup.html)
 
 ## Role Variables
-  - `solr_version` - matches available version on https://archive.apache.org/dist/lucene/solr/. Tested versions 5.3-7.1.x
-    default: `7.1.0`
-  - `override_dest_main_path` - root directory to store solr folder
-    default: `/opt`
-    default: `C:\Solr`
-  - `override_dest_solr_path` - solr folder path
+  - `solr_version` - matches available version on https://archive.apache.org/dist/lucene/solr/. Tested versions 5.3-8.x
+
+    default: `8.0.0`
+
+  - `solr_dest_main_path` - root directory to store solr folder
+
+    default: `/opt` for Linux
+
+    default: `C:\Solr` for Windows
+
+  - `solr_dest_path` - solr folder path
+
     default: `{{ dest_main_path }}/solr-{{ solr_version }}`
-    default: `{{ dest_main_path }}\\solr-{{ solr_version }}`
-  - `overrride_solr_configset_path` - solr configset folder path
-    default: `{{ solr_home }}/configsets`
-    default: `{{ dest_solr_path }}\\server\\solr\\configsets`
+
+  - `solr_configset_path` - solr configset folder path
+
+    default: `{{ solr_home }}/configsets` for Linux
+
+    default: `{{ solr_dest_path }}\server\solr\configsets` for Windows  
+
   - `solr_service_name` - solr service name
+
     default: `solr`
+
   - `solr_with_systemd` - to run solr as a service
+
     default: `True`
+
   - `configset_list` - list of configset directories
+
     default: `- default`
+
   - `auto_populate_configset_list` - get all configset directories automatically
+
     default: `True`
+
   - `solr_base_path` - path to solr base
+
     default: `/var/solr`
+
   - `solr_home` - path to SOLR_HOME
-    default: `{{ solr_base_path }}/data`
+
+    default: `{{ solr_base_path }}/data`  
 
 Example Inventory
 ----------------
